@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book marks assignment</title>
+    <!-- !==== font awesome import -->
+    <link rel="stylesheet" href="css/all.min.css" />
+    <!-- !==== bootstrap css import -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- !==== style css file -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body class="">
+    <!-- start inputs  -->
+    <section>
+      <div class="container py-2">
+        <h1 class="bg-danger p-2 rounded">bookmarks</h1>
+        <div class="crud__form">
+          <div class="row">
+            <div class="col-md-12">
+              <label class="text-uppercase" for="BookMarkNameInput"
+                >BookMark Name:</label
+              >
+              <div class="row justify-content-center align-items-center">
+                <div class="col-md-11">
+                  <input
+                    type="text"
+                    id="BookMarkNameInput"
+                    placeholder="enter your book mark name"
+                    class="form-control my-2 p-2"
+                  />
+                </div>
+                <div class="col-md-1">
+                  <button
+                    onclick="  clearInputs([bookMarkName])"
+                    class="btn btn-danger"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 mt-2">
+              <label class="text-uppercase" for="BookMarkUrlInput"
+                >BookMark URL:</label
+              >
+              <div class="row justify-content-center align-items-center">
+                <div class="col-md-11">
+                  <input
+                    type="text"
+                    id="BookMarkUrlInput"
+                    placeholder="enter your book mark url"
+                    class="form-control my-2 p-2"
+                  />
+                </div>
+                <div class="col-md-1">
+                  <button
+                    onclick="clearInputs([bookMarkUrl])"
+                    class="btn btn-danger"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 mx-auto text-center my-2">
+              <div class="container">
+                <button id="addBookMarkBtn" class="btn btn-outline-success">
+                  Add Book mark
+                </button>
+                <button
+                  id="updateBookMarkBtn"
+                  class="btn btn-outline-info d-none"
+                >
+                  update BookMark
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-4" id="exampleModalLabel">
+              Update Book Mark
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body ps-0">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="text-uppercase" for="BookMarkNameInput"
+                    >BookMark Name:</label
+                  >
+                  <div class="row justify-content-center align-items-center">
+                    <div class="col-md-11">
+                      <input
+                        type="text"
+                        id="modelBookMarkNameInput"
+                        placeholder="enter your book mark name"
+                        class="form-control my-2 p-2"
+                      />
+                    </div>
+                    <div class="col-md-1">
+                      <button
+                        onclick="clearInputs([modelBookMarkNameInput])"
+                        class="btn btn-danger"
+                      >
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                  <label class="text-uppercase" for="BookMarkUrlInput"
+                    >BookMark URL:</label
+                  >
+                  <div class="row justify-content-center align-items-center">
+                    <div class="col-md-11">
+                      <input
+                        type="text"
+                        id="modelBookMarkUrlInput"
+                        placeholder="enter your book mark url"
+                        class="form-control my-2 p-2"
+                      />
+                    </div>
+                    <div class="col-md-1">
+                      <button
+                        onclick="clearInputs([modelBookMarkUrlInput])"
+                        class="btn btn-danger"
+                      >
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              id="updateModelBtn"
+              onclick="updateBookMark()"
+              type="button"
+              class="btn btn-warning w-100 d-none text-white rounded rounded-4"
+              data-bs-dismiss="modal"
+            >
+              Update
+            </button>
+            <button
+              id="addModelBtn"
+              type="button"
+              class="btn btn-primary w-100 rounded rounded-4"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- start Table  -->
+    <section>
+      <div class="container py-2 mt-3">
+        <input
+          type="search"
+          name=""
+          id="searchInput"
+          oninput="displayBookMarks(bookMarkArr)"
+          class="form-control my-2"
+          placeholder="Search......."
+        />
+        <div class="col-md-6 mx-auto text-center">
+          <h2 class="display-5">Table Data</h2>
+        </div>
+        <table class="table text-center mt-3 invisible" id="tableData">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Book mark Name</th>
+              <th>Book mark url</th>
+              <th>Like</th>
+              <th>Visit</th>
+              <th>Update</th>
+              <th>Delete</th>
+              <th>Add to favorite</th>
+            </tr>
+          </thead>
+          <tbody id="showData"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- favorites Table  -->
+    <section>
+      <div class="container mt-2">
+        <div class="col-md-6 mx-auto text-center">
+          <h2 class="display-5">Favorites Table</h2>
+        </div>
+
+        <table class="table text-center mt-3 invisible" id="favTable">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Book mark Name</th>
+              <th>Book mark url</th>
+              <th>Visit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="shawFavBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- !==== bootstrap js import -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- !==== main js import -->
+    <script src="js/main.js"></script>
+  </body>
+</html>
